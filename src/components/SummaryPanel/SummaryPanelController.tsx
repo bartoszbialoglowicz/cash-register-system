@@ -1,3 +1,5 @@
+import './SummaryPanelController.css';
+
 const SummaryPanelController = () => {
     return <div className="summary-panel">
         
