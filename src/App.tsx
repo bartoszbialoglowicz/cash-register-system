@@ -1,5 +1,5 @@
 import './App.css';
-import LoginForm from './components/Auth/LoginForm';
+import AuthContainer from './components/Auth/AuthContainer';
 import { useContext, useState } from 'react';
 import { UserContext } from './store/user-context';
 import AppLayout from './components/AppLayout/AppLayout';
@@ -7,7 +7,7 @@ import AppLayout from './components/AppLayout/AppLayout';
 function App() {
 
   const userCtx = useContext(UserContext);
-  const content = userCtx.isAuthenticated ? <AppLayout /> : <LoginForm />
+  const content = userCtx.isAuthenticated ? <AppLayout /> : <AuthContainer />
 
   return (
     <div className="App">
