@@ -5,8 +5,9 @@ export type ServerAuthResponse = {
 }
 
 export type User = {
-    id: number;
-    username: string;
+    id: number,
+    username: string,
+    isAdmin: boolean
 }
 
 export type AuthState = {
@@ -14,4 +15,12 @@ export type AuthState = {
     user: User,
     login: (user: User) => void,
     logout: () => void
+}
+
+export type MenuItem = {
+    id: number,
+    text: string,
+    icon: string,
+    elementToRender: JSX.Element,
+    requireAdmin: boolean
 }

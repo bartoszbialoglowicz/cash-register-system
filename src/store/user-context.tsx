@@ -5,7 +5,8 @@ const initialState: AuthState = {
     isAuthenticated: false,
     user: {
         id: -1,
-        username: ''
+        username: '',
+        isAdmin: false
     },
     login: (user: User) => {},
     logout: () => {}
