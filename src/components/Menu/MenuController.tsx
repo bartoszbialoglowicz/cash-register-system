@@ -2,10 +2,14 @@ import './MenuController.css';
 import MenuList from './MenuList';
 import MenuUserPanel from './MenuUserPanel';
 
-const MenuController = () => {
+type Props = {
+    setContentHandler: (element: JSX.Element) => void
+}
+
+const MenuController: React.FC<Props> = (props) => {
     return <div className="menu">
         <MenuUserPanel />
-        <MenuList />
+        <MenuList setContentHandler={props.setContentHandler}/>
     </div>
 };
 
