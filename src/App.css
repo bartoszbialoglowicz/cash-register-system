@@ -8,3 +8,28 @@
     font-family: 'Open Sans', sans-serif;
 
 }
+
+input {
+    border-radius: 3px;
+    background-color: #1010112a;
+    border: 2px solid #7b7ba82a;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    color: #ddc6f3;
+}
+
+input[type=submit] {
+    background: rgb(155,134,219,1);
+    background: -moz-linear-gradient(45deg, rgba(155,134,219,1) 0%, rgba(65,85,186,1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(155,134,219,1) 0%, rgba(65,85,186,1) 100%);
+    background: linear-gradient(45deg, rgba(155,134,219,1) 0%, rgba(65,85,186,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4155ba",endColorstr="#9b86db",GradientType=1);
+    border: none;
+    color: #ddc6f3;
+    text-shadow: 0px 0px 5px #111;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 0.1rcap;
+    width: 50%;
+    font-family:Arial, Helvetica, sans-serif;
+}
