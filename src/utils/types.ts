@@ -1,3 +1,7 @@
+import { PRODUCTS_CATEGORY } from "./business"
+
+export type ProductCategory = typeof PRODUCTS_CATEGORY[number];
+
 export type ServerAuthResponse = {
     code: number,
     message: string,
@@ -23,4 +27,26 @@ export type MenuItem = {
     icon: string,
     elementToRender: JSX.Element,
     requireAdmin: boolean
+}
+
+export type DiscountConditions = {
+    minimumProductsCount?: number,
+    minimumTotalOrderPrice?: number,
+}
+
+export type Sale = {
+    saleId: number;
+    productId: number;
+    priceDiscount: number;
+    percentageDiscount: number;
+    discountConditions?: DiscountConditions,
+}
+
+export type Product = {
+    id: number;
+    name: string;
+    category: ProductCategory;
+    price: number;
+    onSale: boolean;
+    imgUrl: string;
 }
