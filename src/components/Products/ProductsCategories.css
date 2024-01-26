@@ -1,0 +1,6 @@
+.products-categories {
+    display: flex;
+    width: 100%;
+    gap: 10px 20px;
+    flex-wrap: wrap;
+}

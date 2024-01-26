@@ -1,0 +1,9 @@
+.products {
+    position: relative;
+    height: 90%;
+    width: 90%;
+    margin: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+}

@@ -1,0 +1,8 @@
+.products-search-bar {
+    width: 100%;
+}
+
+.products-search-bar input {
+    padding: 5px;
+    width: calc(100% - 12px);
+}

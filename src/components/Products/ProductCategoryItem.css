@@ -1,0 +1,11 @@
+.product-cateogory-item {
+    padding: 5px;
+    background-color: #ddc6f3;
+    color: #111122dd;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.product-cateogory-item:hover {
+    background-color: #bba4d1;
+}

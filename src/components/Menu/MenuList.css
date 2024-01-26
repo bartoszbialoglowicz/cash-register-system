@@ -1,0 +1,23 @@
+.menu-list-item {
+    display: flex;
+    height: 40px;
+}
+
+.menu-list-item-icon {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-list-item-text {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.menu-list-item-icon img {
+    height: 70%;
+}
