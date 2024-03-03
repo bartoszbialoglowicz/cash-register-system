@@ -6,9 +6,12 @@ import sales from '../../assets/svg/percentage.svg';
 
 import './MenuList.css';
 import ProductsController from "../Products/ProductsController";
+import SalesController from "../Sales/SalesController";
+import ConfigContainer from "../Config/ConfigContainer";
+import AdminWindow from "../AdminWindow/AdminWindows";
 
 type Props = {
-    setContentHandler: (element: JSX.Element) => void
+    setContentHandler: (item: MenuItem) => void
 }
 
 const MenuList: React.FC<Props> = (props) => {
@@ -25,21 +28,21 @@ const MenuList: React.FC<Props> = (props) => {
             id: 1,
             text: "PROMOCJE",
             icon: sales,
-            elementToRender: <p></p>,
+            elementToRender: <SalesController />,
             requireAdmin: false
         },
         {
             id: 2,
             text: "KONFIGURACJA",
             icon: settings,
-            elementToRender: <p></p>,
+            elementToRender: <ConfigContainer />,
             requireAdmin: true
         },
     ];
 
     // Change the item rendered in Main component
     const setItemContentHandler = (item: MenuItem) => {
-        props.setContentHandler(item.elementToRender);
+        props.setContentHandler(item);
     }
 
     const getItem = (item: MenuItem) => {
