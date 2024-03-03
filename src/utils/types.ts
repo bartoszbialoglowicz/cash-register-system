@@ -52,3 +52,5 @@ export type Product = {
     onSale: boolean;
     imgUrl: string;
 }
+
+export type LabelStatus = "CONNECTED" | "DISCONNECTED";
