@@ -1,0 +1,13 @@
+.sale-card {
+    display: flex;
+    height: 80px;
+    gap: 20px;
+}
+
+.sale-card-image {
+    height: 100%;
+}
+
+.sale-card-image img {
+    height: 100%;
+}
