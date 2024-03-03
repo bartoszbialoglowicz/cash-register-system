@@ -36,9 +36,11 @@ export type DiscountConditions = {
 
 export type Sale = {
     saleId: number;
+    description: string;
     productId: number;
-    priceDiscount: number;
-    percentageDiscount: number;
+    imgSrc: string,
+    priceDiscount?: number;
+    percentageDiscount?: number;
     discountConditions?: DiscountConditions,
 }
 
