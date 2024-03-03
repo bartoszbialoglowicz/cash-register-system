@@ -1,9 +1,10 @@
+import { MenuItem } from '../../utils/types';
 import './MenuController.css';
 import MenuList from './MenuList';
 import MenuUserPanel from './MenuUserPanel';
 
 type Props = {
-    setContentHandler: (element: JSX.Element) => void
+    setContentHandler: (item: MenuItem) => void
 }
 
 const MenuController: React.FC<Props> = (props) => {
