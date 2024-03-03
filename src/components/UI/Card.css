@@ -1,0 +1,16 @@
+.card {
+    box-shadow: 5px 5px 15px #00000088;
+    overflow: hidden;
+    cursor: pointer;
+    color: #eee;
+    padding: 10px;
+    transition: .3s;
+}
+
+.card:hover {
+    background-color: #00000033;
+}
+
+.card-clicked {
+    transform: scale(0.9);
+}
