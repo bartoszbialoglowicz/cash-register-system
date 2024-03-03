@@ -6,15 +6,15 @@
 
 .menu {
     width: 15%;
-    height: 100%;
+    padding: 2.5% 0;
 }
 
 .main {
-    width: 65%;
-    height: 100%;
+    width: 60%;
+    padding: 2.5%;
 }
 
 .summary-panel {
     width: 20%;
-    height: 100%;
+    padding: 2.5% 0;
 }
