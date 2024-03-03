@@ -1,4 +1,5 @@
 import { Product } from "../../utils/types"
+import Card from "../UI/Card";
 
 import './ProductCard.css';
 
@@ -7,12 +8,15 @@ type Props = {
 };
 
 const ProductCard: React.FC<Props> = (props) => {
-    return <div className="product-card">
-        <div className="product-card-image">
-            <img src={props.product.imgUrl} alt={props.product.name} />
+    return <Card>
+        <div className="product-card">
+            <div className="product-card-image">
+                <img src={props.product.imgUrl} alt={props.product.name} />
+            </div>
+            <p>{props.product.name}</p>
         </div>
-        <p>{props.product.name}</p>
-    </div>
+    </Card>
+    
 };
 
 export default ProductCard;
