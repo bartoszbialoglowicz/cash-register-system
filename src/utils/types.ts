@@ -2,10 +2,14 @@ import { PRODUCTS_CATEGORY } from "./business"
 
 export type ProductCategory = typeof PRODUCTS_CATEGORY[number];
 
-export type ServerAuthResponse = {
-    code: number,
+export type TokenResponse = {
+    refresh: string,
+    access: string
+}
+
+export type ErrorMessage = {
     message: string,
-    user?: User
+    code: number
 }
 
 export type User = {
@@ -14,12 +18,29 @@ export type User = {
     isAdmin: boolean
 }
 
+export type Token = {
+    access: string,
+    refresh: string
+}
+
 export type AuthState = {
     isAuthenticated: boolean,
     user: User,
-    login: (user: User) => void,
+    token: Token,
+    assignNewToken: (access: string) => void,
+    login: (user: User, token: Token) => void,
     logout: () => void
 }
+
+export type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH";
+
+export type RequestConfig = {
+    method: HTTPMethod,
+    url: string,
+    authoritzation?: string,
+    body?: object,
+}
+
 
 export type MenuItem = {
     id: number,
