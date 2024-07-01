@@ -1,0 +1,47 @@
+.products-price-filter-inputs {
+    width: 100%;
+    display: inline-flex;
+    gap: 5%;
+}
+
+.products-price-filter-input-container {
+    width: 40%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 3px 0;
+}
+
+.products-price-filter-input-container > input {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    padding: 3px 0;
+    font-size: inherit;
+    -moz-appearance: textfield;
+}
+
+.products-price-filter-input-container > input::-webkit-outer-spin-button,
+.products-price-filter-input-container > input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.products-price-filter-input-container > span {
+    display: block;
+    height: 100%;
+}
+
+.products-price-filter-input-container > span:nth-child(even) {
+    width: 80%;
+}
+.products-price-filter-input-container > span:nth-child(odd) {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.invalid {
+    border: 1px solid red;
+}
