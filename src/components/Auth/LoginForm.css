@@ -37,8 +37,10 @@
     padding: 10px 5px;
     width: 100%;
     margin: 3px 0;
+    transition: .3s;
 }
 
 .login-form-label > input:focus {
-    outline: 2px solid green;
+    outline: none;
+    box-shadow: 0 0 25px #111 inset;
 }
