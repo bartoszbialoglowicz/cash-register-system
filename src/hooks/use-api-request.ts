@@ -19,19 +19,19 @@ export const useApiRequest = () => {
             const headers = {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': requestConfig.authoritzation ? requestConfig.authoritzation : ''
+                'Authorization': requestConfig.authoritzation ? `Bearer ${requestConfig.authoritzation}` : ''
             }
 
             const body = requestConfig.body ? JSON.stringify(requestConfig.body) : null;
-            const response = await fetch(url, {headers: headers, body: body});
+            const response = await fetch(url, {method: requestConfig.method, headers: headers, body: body});
 
             if (response.status === 401) {
                 try {
                     const token = await refresh<{access: string}>();
                     if (token?.access) {
                         userCtx.assignNewToken(token?.access);
-                        headers['Authorization'] = `Bearer: ${token.access}`;
-                        const newResponse = await fetch(url, {headers: headers, body: body});
+                        headers['Authorization'] = `Bearer ${token.access}`;
+                        const newResponse = await fetch(url, {method: requestConfig.method, headers: headers, body: body});
                         if (newResponse.ok) {
                             return newResponse.json() as T;
                         }
@@ -53,7 +53,7 @@ export const useApiRequest = () => {
                 return response.json() as T;
         }
         catch (error: any) {
-            setError(error);
+            setError(error.message);
             return null;
         }
         finally {
