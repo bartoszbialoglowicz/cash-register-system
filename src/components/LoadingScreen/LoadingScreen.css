@@ -7,12 +7,10 @@
     }
 }
 .loading-screen {
-    position: absolute;
     height: 100%;
     width: 100%;
-    top: 0;
-    left: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -23,5 +21,4 @@
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
     animation-timing-function:linear;
-    filter: drop-shadow(0 0 10px #eee);
 }
