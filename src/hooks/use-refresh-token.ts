@@ -15,7 +15,8 @@ export const useRefreshToken = () => {
                 return data as T;
             }
         } catch (error: any) {
-            throw new Error("Cannot refresh the token.");
+            // Logout user if refresh token is expired
+            userCtx.logout();
         }
         
     };
