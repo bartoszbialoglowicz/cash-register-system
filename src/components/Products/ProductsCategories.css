@@ -1,6 +1,6 @@
 .products-categories {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    gap: 10px 20px;
-    flex-wrap: wrap;
+    gap: 10px;
 }
