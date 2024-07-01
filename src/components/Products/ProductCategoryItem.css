@@ -1,18 +1,35 @@
 .product-cateogory-item {
-    padding: 10px;
-    background: rgb(155,134,219,1);
-    background: -moz-linear-gradient(45deg, rgba(155,134,219,1) 0%, rgba(65,85,186,1) 100%);
-    background: -webkit-linear-gradient(45deg, rgba(155,134,219,1) 0%, rgba(65,85,186,1) 100%);
-    background: linear-gradient(45deg, rgba(155,134,219,1) 0%, rgba(65,85,186,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4155ba",endColorstr="#9b86db",GradientType=1);
-    color: #eeeeee;
-    font-size: 14px;
-    border-radius: 3px;
     cursor: pointer;
     transition: .3s;
-    box-shadow: 0 0 15px #00000033;
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .product-cateogory-item:hover {
     filter: hue-rotate(40deg);
+}
+
+.product-category-item-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid green;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s;
+}
+
+.product-category-item-checkbox > img {
+    width: 60%;
+}
+
+.checked {
+    background-color: green;
+}
+
+.product-cateogory-item-name {
+    border-bottom: 1px solid #222;
+    width: calc(100% - 30px);
 }
