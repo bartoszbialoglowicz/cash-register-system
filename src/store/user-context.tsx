@@ -7,7 +7,9 @@ const initialState: AuthState = {
     user: {
         id: -1,
         username: '',
-        isAdmin: false
+        isStaff: false,
+        firstName: '',
+        lastName: '',
     },
     token: {
         access: '',
