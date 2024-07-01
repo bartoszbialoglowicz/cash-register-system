@@ -15,7 +15,9 @@ export type ErrorMessage = {
 export type User = {
     id: number,
     username: string,
-    isAdmin: boolean
+    firstName: string,
+    lastName: string,
+    isStaff: boolean
 }
 
 export type Token = {
@@ -65,13 +67,22 @@ export type Sale = {
     discountConditions?: DiscountConditions,
 }
 
+export type Manufacturer = {
+    id: number;
+    country: string;
+    name: string;
+}
+
 export type Product = {
     id: number;
     name: string;
     category: ProductCategory;
     price: number;
-    onSale: boolean;
+    manufacturer: Manufacturer;
     imgUrl: string;
+    stock_quantity: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export type LabelStatus = "CONNECTED" | "DISCONNECTED";
