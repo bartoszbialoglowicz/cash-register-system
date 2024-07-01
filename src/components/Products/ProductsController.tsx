@@ -1,80 +1,107 @@
 import { Product, ProductCategory } from "../../utils/types";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
-import ProductsContainer from "./ProductsContainer";
 import ProductsSearchBar from "./ProductsSearchBar";
 
 import './ProductsController.css';
-import { useEffect, useState } from "react";
-import ProductsCategories from "./ProductsCategories";
+import { useContext, useEffect, useState } from "react";
+import ProductsCategoryFilter from "./ProductsCategoriesFilter";
+import { useApiRequest } from "../../hooks/use-api-request";
+import { PRODUCTS_URL } from "../../utils/urls";
+import { UserContext } from "../../store/user-context";
+import ErrorCard from "../UI/ErrorCard";
+import ProductsTable from "./ProductsTable";
+import ProductsPriceFilter from "./ProductsPriceFilter";
 
 const ProductsController = () => {
-    
-    const DUMMY_PRODUCTS: Product[] = [
-        {
-            id: 1,
-            name: 'Banan',
-            category: 'OWOCE',
-            price: 6,
-            onSale: false,
-            imgUrl: "https://owocnegodnia.pl/wp-content/uploads/2022/09/Banan-str-1.png"
-        },
-        {
-            id: 2,
-            name: 'Mango',
-            category: 'OWOCE',
-            price: 10,
-            onSale: false,
-            imgUrl: 'https://www.lokalnywarzywniak.pl/745-large_default/mango-odmiana-keitt.jpg'
-        }
-    ]
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [allProducts, setAllProducts] = useState(DUMMY_PRODUCTS);
-    const [currentCategory, setCurrentCategory] = useState<ProductCategory>('WSZYSTKO');
-    const [currentCategoryProducts, setCurrentCategoryProducts] = useState(DUMMY_PRODUCTS);
-    const [currentProducts, setCurrentProducts] = useState(DUMMY_PRODUCTS);
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
+    const [currentCategories, setCurrentCategories] = useState<ProductCategory[]>([]);
+    const [currentCategoryProducts, setCurrentCategoryProducts] = useState<Product[]>([]);
+    const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
+
+    const {isLoading, error, sendRequest} = useApiRequest();
+    const userCtx = useContext(UserContext);
 
     const onSearchBarChangeHandler = (text: string) => {
         filterProductsByName(text);
     }
 
+    const onMinPriceChangeHandler = (value: number) => {
+
+    };
+
+    const onMaxPriceChangeHandler = (value: number) => {
+        if (value !== 0) {
+            setCurrentProducts(prevState => {
+                return currentCategoryProducts.filter(product => {
+                    return product.price < value;
+                })
+            })
+        }
+    };
+
     const onClickCategoryHandler = (category: ProductCategory) => {
-        setCurrentCategory(category);
+        setCurrentCategories(prevCategories => {
+            const index = prevCategories.findIndex(el => el === category);
+            if (index === -1)
+                return [...prevCategories, category];
+            else
+                return prevCategories.filter((el) => el !== category);
+        });
     };
 
     const filterProductsByName = (text: string) => {
-        setIsLoading(true);
         setCurrentProducts(prevState => {
                 return currentCategoryProducts.filter(product => {
                     return product.name.toLowerCase().includes(text.toLowerCase());
-                })
+            })
         });
-        setIsLoading(false);
     };
 
-    const filterProductsByCategory = (category: ProductCategory) => {
-        setIsLoading(true);
-        const products = category === "WSZYSTKO" ? allProducts :
+    const filterProductsByCategory = (categories: ProductCategory[]) => {
+        const products = categories.length === 0 ? allProducts :
             allProducts.filter(product => {
-                return product.category === category;
-            })
+                return categories.find(category => category === product.category);
+            });
 
-        setCurrentCategoryProducts(products)
+        setCurrentCategoryProducts(products);
         setCurrentProducts(products);
-        setIsLoading(false);
     }
 
     useEffect(() => {
-        filterProductsByCategory(currentCategory);
-        console.log('e');
-    }, [currentCategory]);
+        filterProductsByCategory(currentCategories);
+    }, [currentCategories])
+
+    useEffect(() => {
+        const getData = async () => {
+            const data = await sendRequest<Product[]>({
+                method: "GET",
+                url: PRODUCTS_URL,
+                authoritzation: userCtx.token.access
+            });
+
+            if (data) {
+                setAllProducts(data);
+                setCurrentCategoryProducts(data);
+                setCurrentProducts(data);
+            }
+        };
+
+        getData();
+    }, []);
 
     
     return <div className="products">
-        <ProductsSearchBar  onChange={onSearchBarChangeHandler}/>
-        <ProductsCategories onClick={onClickCategoryHandler}/>
-        { !isLoading && <ProductsContainer products={currentProducts} />}
-        { isLoading && <LoadingScreen />}
+        <div className="products-filter-panel">  
+            <ProductsSearchBar  onChange={onSearchBarChangeHandler}/>
+            <ProductsCategoryFilter onClick={onClickCategoryHandler}/>
+            <ProductsPriceFilter onMinPriceChange={onMinPriceChangeHandler} onMaxPriceChange={onMaxPriceChangeHandler}/>
+        </div>
+        <div className="products-items">
+            { !isLoading && <ProductsTable products={currentProducts} />}
+            { isLoading && <LoadingScreen />}
+            {error && <ErrorCard errorMessage={error} />}
+        </div>
     </div>
 };
 
