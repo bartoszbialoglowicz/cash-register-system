@@ -12,65 +12,72 @@ import ErrorCard from "../UI/ErrorCard";
 import ProductsTable from "./ProductsTable";
 import ProductsPriceFilter from "./ProductsPriceFilter";
 
+type Filter = {
+    minPrice: number | null,
+    maxPrice: number | null,
+    name: string | null,
+    category: ProductCategory[],
+}
+
 const ProductsController = () => {
 
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [currentCategories, setCurrentCategories] = useState<ProductCategory[]>([]);
-    const [currentCategoryProducts, setCurrentCategoryProducts] = useState<Product[]>([]);
-    const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const [currentFilters, setCurrentFilters] = useState<Filter>({
+        minPrice: null,
+        maxPrice: null,
+        name: null,
+        category: []
+    });
 
     const {isLoading, error, sendRequest} = useApiRequest();
     const userCtx = useContext(UserContext);
 
-    const onSearchBarChangeHandler = (text: string) => {
-        filterProductsByName(text);
+    const onSearchBarChangeHandler = (text: string | null) => {
+        setCurrentFilters(prevState => ({...prevState, name: text}));
     }
 
-    const onMinPriceChangeHandler = (value: number) => {
-
+    const onMinPriceChangeHandler = (value: number | null) => {
+        setCurrentFilters(prevState => ({...prevState, minPrice: value}));
     };
 
-    const onMaxPriceChangeHandler = (value: number) => {
-        if (value !== 0) {
-            setCurrentProducts(prevState => {
-                return currentCategoryProducts.filter(product => {
-                    return product.price < value;
-                })
-            })
-        }
+    const onMaxPriceChangeHandler = (value: number | null) => {
+        setCurrentFilters(prevState => ({...prevState, maxPrice: value}));
     };
 
     const onClickCategoryHandler = (category: ProductCategory) => {
-        setCurrentCategories(prevCategories => {
-            const index = prevCategories.findIndex(el => el === category);
+        setCurrentFilters(prevState=> {
+            const index = prevState.category.findIndex(el => el === category);
             if (index === -1)
-                return [...prevCategories, category];
+                return {...prevState, category: [...prevState.category, category]};
             else
-                return prevCategories.filter((el) => el !== category);
+                return {...prevState, category: prevState.category.filter(el => el !== category)}
         });
     };
 
-    const filterProductsByName = (text: string) => {
-        setCurrentProducts(prevState => {
-                return currentCategoryProducts.filter(product => {
-                    return product.name.toLowerCase().includes(text.toLowerCase());
+    const filterProductByName = (text: string, product: Product) => {
+        return product.name.toLowerCase().includes(text.toLowerCase());
+    };
+
+    const filterProductByCategory = (categories: ProductCategory[], product: Product) => {
+        return categories.find(el => el === product.category);
+    }
+
+    const applyFilters = () => {
+        setFilteredProducts(prevState => {
+            return allProducts.filter(product => {
+                return (!currentFilters.name || filterProductByName(currentFilters.name, product)) &&
+                    (!currentFilters.minPrice || product.price >= currentFilters.minPrice) &&
+                    (!currentFilters.maxPrice || product.price <= currentFilters.maxPrice) &&
+                    ((currentFilters.category.length === 0) || filterProductByCategory(currentFilters.category, product));
             })
         });
     };
 
-    const filterProductsByCategory = (categories: ProductCategory[]) => {
-        const products = categories.length === 0 ? allProducts :
-            allProducts.filter(product => {
-                return categories.find(category => category === product.category);
-            });
-
-        setCurrentCategoryProducts(products);
-        setCurrentProducts(products);
-    }
-
     useEffect(() => {
-        filterProductsByCategory(currentCategories);
-    }, [currentCategories])
+        applyFilters();
+    }, [currentFilters])
 
     useEffect(() => {
         const getData = async () => {
@@ -82,8 +89,7 @@ const ProductsController = () => {
 
             if (data) {
                 setAllProducts(data);
-                setCurrentCategoryProducts(data);
-                setCurrentProducts(data);
+                setFilteredProducts(data);
             }
         };
 
@@ -98,7 +104,7 @@ const ProductsController = () => {
             <ProductsPriceFilter onMinPriceChange={onMinPriceChangeHandler} onMaxPriceChange={onMaxPriceChangeHandler}/>
         </div>
         <div className="products-items">
-            { !isLoading && <ProductsTable products={currentProducts} />}
+            { !isLoading && <ProductsTable products={filteredProducts} />}
             { isLoading && <LoadingScreen />}
             {error && <ErrorCard errorMessage={error} />}
         </div>
