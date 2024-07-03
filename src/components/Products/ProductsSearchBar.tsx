@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import './ProductsSearchBar.css';
 
 type Props = {
-    onChange: (text: string) => void
+    onChange: (text: string | null) => void
 }
 
 const ProductsSearchBar: React.FC<Props> = (props) => {
