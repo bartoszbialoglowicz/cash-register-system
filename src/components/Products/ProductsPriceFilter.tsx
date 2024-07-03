@@ -2,8 +2,8 @@ import { useRef, useState } from 'react';
 import './ProductsPriceFilter.css';
 
 type Props = {
-    onMinPriceChange: (value: number) => void,
-    onMaxPriceChange: (value: number) => void
+    onMinPriceChange: (value: number | null) => void,
+    onMaxPriceChange: (value: number | null) => void
 };
 
 const ProductsPriceFilter: React.FC<Props> = (props) => {
@@ -18,8 +18,13 @@ const ProductsPriceFilter: React.FC<Props> = (props) => {
         // Get value from input every time it changes
         setInputInvalidClass('');
         const currentValue: number = Number(minPriceInputRef.current!.value);
-        if ((currentValue > Number(maxPriceInputRef.current!.value)) && Number(maxPriceInputRef.current!.value) !== 0)
+        if ((currentValue > Number(maxPriceInputRef.current!.value)) && Number(maxPriceInputRef.current!.value) !== 0) {
+            // Update css class and clear filters if invalid criterias
             setInputInvalidClass(invalidClassName);
+            props.onMaxPriceChange(null);
+            props.onMinPriceChange(null);
+            return;
+        }
         props.onMinPriceChange(currentValue);
     }
 
@@ -27,8 +32,13 @@ const ProductsPriceFilter: React.FC<Props> = (props) => {
         // Get value from input every time it changes
         setInputInvalidClass('');
         const currentValue: number = Number(maxPriceInputRef.current!.value);
-        if (currentValue < Number(minPriceInputRef.current!.value))
-            setInputInvalidClass(inputInvalidClass);
+        if (currentValue < Number(minPriceInputRef.current!.value) && Number(currentValue) !== 0) {
+            // Update css class and clear filters if invalid criterias
+            setInputInvalidClass(invalidClassName);
+            props.onMaxPriceChange(null);
+            props.onMinPriceChange(null);
+            return;
+        }
         props.onMaxPriceChange(currentValue);
     }
     
