@@ -1,0 +1,35 @@
+.product-cateogory-item {
+    cursor: pointer;
+    transition: .3s;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.product-cateogory-item:hover {
+    filter: hue-rotate(40deg);
+}
+
+.product-category-item-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid green;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s;
+}
+
+.product-category-item-checkbox > img {
+    width: 60%;
+}
+
+.checked {
+    background-color: green;
+}
+
+.product-cateogory-item-name {
+    border-bottom: 1px solid #222;
+    width: calc(100% - 30px);
+}
