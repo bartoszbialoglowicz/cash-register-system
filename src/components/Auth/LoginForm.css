@@ -1,46 +1,69 @@
 .login-form {
     padding: 60px;
-    background-color: #27272cdd;
+    box-shadow: 0 0 25px #27272c66;
     border-radius: 5px;
     transition: .2s;
     min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 .login-form > form {
     width: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .login-form > h1 {
     text-align: center;
     text-transform: uppercase;
+    color: #333 ;
 }
 
 .login-form-label {
     width: 100%;
-    margin: 10px 0;
+    font-size: 14px;
 }
 
 .login-form-label label {
     display: block;
+    color: #888;
+}
+
+.login-form-label > input {
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    border: none;
+    border-bottom: 1px solid #999;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.login-form-label > input:focus {
+    border-bottom: 1px solid #229922;
 }
 
 .login-form-label:last-child {
-    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.login-form-label > input {
-    padding: 10px 5px;
-    width: 100%;
-    margin: 3px 0;
-    transition: .3s;
+.login-form-label > input[type=submit] {
+    background-color: #229922cc;
+    border-bottom: none;
+    color: #ddd;
+    width: 50%;
+    margin-top: 20px;
 }
 
-.login-form-label > input:focus {
-    outline: none;
-    box-shadow: 0 0 25px #111 inset;
+.login-form-label > input[type=submit]:focus,
+.login-form-label > input[type=submit]:hover {
+    background-color: #229922ee;
 }
