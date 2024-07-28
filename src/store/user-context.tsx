@@ -31,9 +31,9 @@ const UserContextProvider: React.FC<{children: JSX.Element}> = (props) => {
     const loginHandler = (user: User, token: Token) => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', JSON.stringify(token));
+        setIsAuthenticated(true);
         setUser(user);
         setToken(token);
-        setIsAuthenticated(true);
     }
 
     const logoutHandler = () => {
