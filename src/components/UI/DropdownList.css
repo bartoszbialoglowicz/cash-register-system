@@ -1,0 +1,46 @@
+@keyframes show {
+    from {height: 0%; }
+    to {height: 100%; }
+}
+
+@keyframes hide {
+    from {height: 100%;}
+    to {height: 0%;}
+}
+
+.dropdown-list {
+    width: 100%;
+    overflow: hidden;
+}
+
+.dropdown-list-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.dropdown-list-header-toggle{
+    cursor: pointer;
+}
+
+.dropdown-list-elements {
+    width: 100%;
+    overflow: hidden;
+}
+
+.dropdown-list-elements > ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hide-animation {
+    animation-name: hide;
+    animation-duration: .4s;
+}
+
+.show-animation {
+    animation-name: show;
+    animation-duration: .4s;
+}
