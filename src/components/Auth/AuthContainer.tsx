@@ -6,8 +6,9 @@ import LoginForm from "./LoginForm";
 import { TokenResponse, User } from "../../utils/types";
 import { TOKEN_URL, USER_URL } from "../../utils/urls";
 import { usePublicApiRequest } from "../../hooks/use-public-api-request";
-import ErrorAlert from "../UI/ErrorAlert";
+import ErrorAlert from "../UI/Alert";
 import { useApiRequest } from "../../hooks/use-api-request";
+import { AlertContext } from "../../store/alert-context";
 
 const AuthContainer: React.FC = () => {
 
@@ -15,6 +16,7 @@ const AuthContainer: React.FC = () => {
     const passwordValue = useRef<HTMLInputElement>(null);
 
     const userCtx = useContext(UserContext);
+    const alertCtx = useContext(AlertContext);
     const {isLoading, error, sendRequest} = usePublicApiRequest();
     const {isLoading: isLoading2, error: error2, sendRequest: sendPrivateRequest} = useApiRequest();
 
@@ -30,10 +32,12 @@ const AuthContainer: React.FC = () => {
         if (response) {
             const user = await sendPrivateRequest<User>({method: "GET", url: USER_URL, body: undefined, authoritzation: response.access});
             if (user) {
+                alertCtx?.addAlert(`Pomyślnie zalogowano ${user.username}`, 'success');
                 userCtx.login(user, response);
             }
         } else if (error) {
             setErrorMessage(error.message);
+            alertCtx?.addAlert(error.message, 'error');
         }
     }
 
@@ -46,6 +50,7 @@ const AuthContainer: React.FC = () => {
         event.preventDefault();
         if (inputValue.current!.value === '' || passwordValue.current!.value === '') {
             showErrorMessageHandler("Wypełnij wszystkie pola!");
+            alertCtx?.addAlert('Wypełnij wszystkie pola', 'error');
         }
         else { 
             const response = await getResponse();
@@ -56,9 +61,9 @@ const AuthContainer: React.FC = () => {
     useEffect(() => {
         setErrorMessage(null);
         if (error && error.code === 401) {
-            showErrorMessageHandler("Invalid credentials");
+            alertCtx?.addAlert('Nieprawidłowe dane logowania', 'error');
         } else if (error){
-            showErrorMessageHandler(error.message);
+            alertCtx?.addAlert(error.message, 'error');
         }
     }, [error])
 
@@ -68,7 +73,6 @@ const AuthContainer: React.FC = () => {
 
     return <div className="auth">
         <LoginForm formSubmitHandler={formSubmitHandler} inputValue={inputValue} passwordValue={passwordValue} error=""/>
-        {(isErrorAlertVisible && errorMessage) && <ErrorAlert errorMessage={errorMessage} onButtonClick={hideAlertHandler} buttonText={"OK"}/>}
     </div>
 };
 

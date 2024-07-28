@@ -15,7 +15,6 @@ const LoginForm: React.FC<Props> = (props) => {
         <form onSubmit={props.formSubmitHandler}>
             <div className="login-form-label"><label>Username</label><input type="text" ref={props.inputValue}/></div>
             <div className="login-form-label"><label>Password</label><input type="password" ref={props.passwordValue}/></div>
-            {props.error && <div className="login-form-error"><p>{props.error}</p></div>}
             <div className="login-form-label"><label></label><input type="submit" value="SIGN IN"/></div>
         </form>
     </div>
