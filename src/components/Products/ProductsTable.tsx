@@ -76,8 +76,8 @@ const ProductsTable: React.FC<{products: Product[]}> = (props) => {
             <td>{product.price}</td>
             <td>{product.manufacturer.name}</td>
             <td>{product.stock_quantity}</td>
-            <td>{product.created_at}</td>
-            <td>{product.updated_at}</td>
+            <td>{new Date(product.created_at).toLocaleDateString()}</td>
+            <td>{new Date(product.updated_at).toLocaleDateString()}</td>
         </tr>
     });
 
