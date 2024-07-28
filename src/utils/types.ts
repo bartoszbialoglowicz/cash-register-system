@@ -52,21 +52,6 @@ export type MenuItem = {
     requireAdmin: boolean
 }
 
-export type DiscountConditions = {
-    minimumProductsCount?: number,
-    minimumTotalOrderPrice?: number,
-}
-
-export type Sale = {
-    saleId: number;
-    description: string;
-    productId: number;
-    imgSrc: string,
-    priceDiscount?: number;
-    percentageDiscount?: number;
-    discountConditions?: DiscountConditions,
-}
-
 export type Manufacturer = {
     id: number;
     country: string;
@@ -79,10 +64,26 @@ export type Product = {
     category: ProductCategory;
     price: number;
     manufacturer: Manufacturer;
-    imgUrl: string;
+    image: string;
     stock_quantity: string;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
+export type Discount = {
+    discount_percentage: number,
+    product: string,
+    start_date: Date,
+    end_date: Date
+}
+
+
 export type LabelStatus = "CONNECTED" | "DISCONNECTED";
+
+export type AlertType = 'error' | 'warning' | 'info' | 'success';
+
+export interface AlertMessage {
+    id: number,
+    message: string,
+    type: AlertType
+};
