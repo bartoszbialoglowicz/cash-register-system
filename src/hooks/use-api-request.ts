@@ -27,6 +27,7 @@ export const useApiRequest = () => {
 
             if (response.status === 401) {
                 try {
+                    console.log('Próba przyznania tokenu...');
                     const token = await refresh<{access: string}>();
                     if (token?.access) {
                         userCtx.assignNewToken(token?.access);
