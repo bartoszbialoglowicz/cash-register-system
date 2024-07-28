@@ -6,9 +6,8 @@ import sales from '../../assets/svg/percentage.svg';
 
 import './MenuList.css';
 import ProductsController from "../Products/ProductsController";
-import SalesController from "../Sales/SalesController";
+import DiscountController from "../Discounts/DiscountController";
 import ConfigContainer from "../Config/ConfigContainer";
-import AdminWindow from "../AdminWindow/AdminWindows";
 
 type Props = {
     setContentHandler: (item: MenuItem) => void
@@ -28,7 +27,7 @@ const MenuList: React.FC<Props> = (props) => {
             id: 1,
             text: "PROMOCJE",
             icon: sales,
-            elementToRender: <SalesController />,
+            elementToRender: <DiscountController />,
             requireAdmin: false
         },
         {
