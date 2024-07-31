@@ -14,11 +14,11 @@ export const AlertProvider: React.FC<{children: JSX.Element}> = (props) => {
     const [alerts, setAlerts] = useState<AlertMessage[]>([]);
 
     const addAlertHandler = useCallback((message: string, alertType: AlertType) => {
-        const id = alerts.length === 0 ? 1 : alerts[alerts.length - 1].id + 1;
+        const id = `${message}${alerts.length}`;
         setAlerts(prevState => [...prevState, {message: message, type: alertType, id: id}]);
     }, []);
 
-    const removeAlertHandler = (id: number) => {
+    const removeAlertHandler = (id: string) => {
         setAlerts(prevState => prevState.filter(alert => alert.id !== id));
     }
 
@@ -28,7 +28,7 @@ export const AlertProvider: React.FC<{children: JSX.Element}> = (props) => {
 
     return <AlertContext.Provider value={contextValue}>
         <div className='alert-container'>
-            {alerts.map(el => <Alert alert={el} onClose={removeAlertHandler}/>)}
+            {alerts.map(el => <Alert alert={el} onClose={removeAlertHandler} key={el.id}/>)}
         </div>
         {props.children}
     </AlertContext.Provider>

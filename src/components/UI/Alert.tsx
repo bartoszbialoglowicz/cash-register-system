@@ -4,7 +4,7 @@ import { AlertMessage } from '../../utils/types';
 
 type AlertProps = {
     alert: AlertMessage,
-    onClose: (id: number) => void
+    onClose: (id: string) => void
 }
 
 const Alert: React.FC<AlertProps> = (props) => {
