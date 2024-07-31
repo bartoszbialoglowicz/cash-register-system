@@ -103,7 +103,6 @@ const ProductsController = () => {
             const data = await sendRequest<Product[]>({
                 method: "GET",
                 url: PRODUCTS_URL,
-                authoritzation: userCtx.token.access
             });
 
             if (data) {

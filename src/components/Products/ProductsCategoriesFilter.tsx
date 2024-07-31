@@ -32,7 +32,6 @@ const ProductsCategoryFilter: React.FC<Props> = (props) => {
         const setData = async () => {
             const data = await sendRequest<CategoryResponse[]>({
                 url: CATEGORY_URL,
-                authoritzation: userCtx.token.access,
                 method: 'GET'
             });
 

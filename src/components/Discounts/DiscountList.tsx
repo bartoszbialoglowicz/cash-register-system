@@ -21,7 +21,6 @@ const DiscountList = () => {
             const data = await sendRequest<Discount[]>({
                 url: DISCOUNTS_LIST_URL,
                 method: 'GET',
-                authoritzation: userCtx.token.access
             });
 
             if (data) {

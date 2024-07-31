@@ -23,7 +23,6 @@ const ProductsManufacturerFilter: React.FC<Props> = (props) => {
             const data = await sendRequest<Manufacturer[]>({
                 url: MANUFACTURERS_LIST_URL,
                 method: "GET",
-                authoritzation: userCtx.token.access
             });
 
             if (data)
