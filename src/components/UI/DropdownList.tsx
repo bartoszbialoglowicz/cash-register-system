@@ -13,7 +13,7 @@ const DropdownList: React.FC<Props> = (props) => {
     const [listHidden, setListHidden] = useState<boolean>(props.hideAtStart ? props.hideAtStart : false);
 
     const toggleText = listHidden ? "Pokaż" : "Ukryj";
-    const listElements = props.listElements.map(element => <li>{element}</li>);
+    const listElements = props.listElements.map((element, index) => <li key={index}>{element}</li>);
     const ANIMATION_TIME_MS = 400;
     const [animationClass, setAnimationClass] = useState<"hide-animation" | "show-animation">("show-animation");
 

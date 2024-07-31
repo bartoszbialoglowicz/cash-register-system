@@ -36,7 +36,7 @@ const DiscountList = () => {
             alertCtx?.addAlert("Nie udało się pobrać listy promocji", 'error');
     }, [error])
 
-    const discountItems = discounts.map(discount => <DiscountCard discount={discount}/>);
+    const discountItems = discounts.map((discount, index) => <DiscountCard discount={discount} key={index}/>);
 
     return <div className="discount-list">
         {discountItems}
