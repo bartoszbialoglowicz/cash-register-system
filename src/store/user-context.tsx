@@ -1,21 +1,24 @@
 import { createContext, useEffect, useState } from "react";
 import { AuthState, Token, User } from "../utils/types";
-import { access } from "fs";
 
 const initialState: AuthState = {
-    isAuthenticated: false,
-    user: {
-        id: -1,
-        username: '',
-        isStaff: false,
-        firstName: '',
-        lastName: '',
-    },
-    token: {
-        access: '',
-        refresh: ''
-    },
-    assignNewToken: (access: string) => {},
+    isAuthenticated: localStorage.getItem('user') ? true : false,
+    user: localStorage.getItem('user') ? 
+        JSON.parse(localStorage.getItem('user')!) : 
+        {
+            id: -1,
+            username: '',
+            isStaff: false,
+            firstName: '',
+            lastName: '',
+        },
+    token: 
+        localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')!) :
+        {
+            access: '',
+            refresh: ''
+        },
+    assignNewToken: (access: string, refresh?: string) => {},
     login: (user: User, token: Token) => {},
     logout: () => {}
 };
@@ -44,11 +47,10 @@ const UserContextProvider: React.FC<{children: JSX.Element}> = (props) => {
         setIsAuthenticated(false);
     }
 
-    const assignNewToken = (access: string) => {
-        setToken(prevState => ({
-            ...prevState,
-            access: access
-        }));
+    const assignNewToken = (access: string, refresh?: string) => {
+        const newToken = {access: access, refresh: refresh ? refresh : token.refresh}
+        setToken(newToken);
+        localStorage.setItem('token', JSON.stringify(newToken));
     }
 
     useEffect(() => {
