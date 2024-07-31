@@ -2,16 +2,15 @@ import { useContext, useState } from "react"
 import { RequestConfig } from "../utils/types";
 
 import { AppConfig } from "../utils/config";
-import { useRefreshToken } from "./use-refresh-token";
 import { UserContext } from "../store/user-context";
+import TokenService from "../services/TokenService";
 
 export const useApiRequest = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const refresh = useRefreshToken();
     const userCtx = useContext(UserContext);
 
-    const sendRequest = async <T>(requestConfig: RequestConfig) => {
+    const sendRequest = async <T>(requestConfig: RequestConfig, newToken?: string, isBlocked?: boolean):Promise<T | null | undefined> => {
         setIsLoading(true);
         setError(null);
         try {
@@ -19,37 +18,27 @@ export const useApiRequest = () => {
             const headers = {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': requestConfig.authoritzation ? `Bearer ${requestConfig.authoritzation}` : ''
+                'Authorization': newToken? `Bearer ${newToken}` : `Bearer ${userCtx.token.access}`
             }
 
             const body = requestConfig.body ? JSON.stringify(requestConfig.body) : null;
             const response = await fetch(url, {method: requestConfig.method, headers: headers, body: body});
 
-            if (response.status === 401) {
+            if (response.status === 401 && !isBlocked) {
                 try {
-                    console.log('Próba przyznania tokenu...');
-                    const token = await refresh<{access: string}>();
-                    if (token?.access) {
-                        userCtx.assignNewToken(token?.access);
-                        headers['Authorization'] = `Bearer ${token.access}`;
-                        const newResponse = await fetch(url, {method: requestConfig.method, headers: headers, body: body});
-                        if (newResponse.ok) {
-                            return newResponse.json() as T;
-                        }
-                        else {
-                            setError(`Request failed with status ${newResponse.status} ${newResponse.statusText}`)
-                        }
+                    const newAccess = await TokenService.refreshToken(userCtx.token.refresh);
+                    if (newAccess) {
+                        userCtx.assignNewToken(newAccess.access);
+                        return await sendRequest(requestConfig, newAccess.access, true);
                     }
-                    else
-                        setError("Unable to get the new token!");
                 } catch (error: any) {
-                    setError(error.message);
+                    userCtx.logout();
+                    setError(error);
                 }
             }
             if (!response.ok) {
                 setError(`Request failed with status ${response.status} ${response.statusText}`)
             }
-
             else
                 return response.json() as T;
         }
