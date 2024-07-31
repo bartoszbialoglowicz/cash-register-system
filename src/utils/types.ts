@@ -29,7 +29,7 @@ export type AuthState = {
     isAuthenticated: boolean,
     user: User,
     token: Token,
-    assignNewToken: (access: string) => void,
+    assignNewToken: (access: string, refresh?: string) => void,
     login: (user: User, token: Token) => void,
     logout: () => void
 }
@@ -39,7 +39,6 @@ export type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH";
 export type RequestConfig = {
     method: HTTPMethod,
     url: string,
-    authoritzation?: string,
     body?: object,
 }
 
@@ -83,7 +82,7 @@ export type LabelStatus = "CONNECTED" | "DISCONNECTED";
 export type AlertType = 'error' | 'warning' | 'info' | 'success';
 
 export interface AlertMessage {
-    id: number,
+    id: string,
     message: string,
     type: AlertType
 };
