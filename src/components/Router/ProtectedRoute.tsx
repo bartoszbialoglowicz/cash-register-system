@@ -1,14 +1,18 @@
+import { useContext } from "react";
 import { Navigate } from "react-router-dom";
+import { UserContext } from "../../store/user-context";
 
 type Props = {
-    children: JSX.Element,
-    isAuthenticated: boolean
+    children: JSX.Element
 }
 
 const ProtectedRoute: React.FC<Props> = (props) => {
-    if (props.isAuthenticated) {
-        console.log('ad');
-        return <Navigate to='auth' replace />
+
+    const userCtx = useContext(UserContext);
+
+
+    if (!userCtx.isAuthenticated) {
+        return <Navigate to='/auth' replace />
     }
     
     return <>
